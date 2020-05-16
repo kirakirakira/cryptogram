@@ -5,4 +5,4 @@ activate:
 	pipenv shell
 
 test:
-	python3 -m unittest -v tests.test_main
+	python3 -m unittest -v tests.test_game
