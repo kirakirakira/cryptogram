@@ -1,10 +1,12 @@
 from unittest.mock import patch
+import io
 import unittest
 import re
 
 from game import game
 
 class TestSum(unittest.TestCase):
+
     def test_input_yes(self):
         user_input = 'y'
 
@@ -23,14 +25,15 @@ class TestSum(unittest.TestCase):
             actual = game.get_start()
         self.assertEqual(actual, expected)
 
-    def test_print_puzzle(self):
+    def test_get_puzzle(self):
         puzzle = "I am going to play this game"
         expected = "     ".join(puzzle.split())
         expected = re.sub("[a-zA-Z]", "_ ", expected)
 
-        actual = game.print_puzzle()
+        actual = game.get_puzzle()
 
         self.assertEqual(actual, expected)
+
 
 if __name__ == '__main__':
     unittest.main()
