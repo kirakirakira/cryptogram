@@ -2,8 +2,7 @@ import re
 import random
 
 puzzle = "I am going to play this game"
-random_number = random.randint(1, 26)
-print(random_number)
+
 alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', \
     'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', \
         'S', 'T', 'U', 'V', 'X', 'Y', 'Z']

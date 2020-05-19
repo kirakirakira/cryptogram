@@ -37,6 +37,3 @@ class TestSum(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-
-
-# to run tests, do `python3 -m unittest -v tests.test_game`
