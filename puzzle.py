@@ -12,8 +12,6 @@ random.shuffle(alphabet)
 key = {original_alphabet[i]: alphabet[i]
        for i in range(len(original_alphabet))}
 
-print(key)
-
 hashed_puzzle = ""
 
 for letter in puzzle:
@@ -22,4 +20,10 @@ for letter in puzzle:
     else:
         hashed_puzzle += key[letter.upper()]
 
+transformed_puzzle = "   ".join(puzzle.split())
+transformed_puzzle = re.sub("[a-zA-Z]", "_", transformed_puzzle)
+
+hashed_puzzle = "   ".join(hashed_puzzle.split())
+
+print(transformed_puzzle)
 print(hashed_puzzle)
