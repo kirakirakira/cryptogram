@@ -28,6 +28,7 @@ class Game:
     def get_puzzle(self):
         transformed_puzzle = "     ".join(puzzle.split())
         transformed_puzzle = re.sub("[a-zA-Z]", "_ ", transformed_puzzle)
+
         print(transformed_puzzle)
 
     def play_round(self):
