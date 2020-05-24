@@ -55,7 +55,7 @@ class Puzzle:
                "I am going to win this game", "You are going to lose"]
 
     def __init__(self):
-        self.randomPuzzleIndex = dict()
+        self.hashed_key = dict()
         self.guesses = {
             Puzzle.ALPHABET[i]: '_' for i in range(len(Puzzle.ALPHABET))}
         self.puzzle = ""
@@ -65,7 +65,7 @@ class Puzzle:
     def get_key(self):
         original_alphabet = list.copy(Puzzle.ALPHABET)
         random.shuffle(original_alphabet)
-        self.randomPuzzleIndex = {Puzzle.ALPHABET[i]: original_alphabet[i]
+        self.hashed_key = {Puzzle.ALPHABET[i]: original_alphabet[i]
                                   for i in range(len(Puzzle.ALPHABET))}
 
     def get_puzzle(self):
@@ -76,7 +76,7 @@ class Puzzle:
             if letter.isspace():
                 self.hashed_puzzle += letter
             else:
-                self.hashed_puzzle += self.randomPuzzleIndex[letter.upper()]
+                self.hashed_puzzle += self.hashed_key[letter.upper()]
 
         self.hashed_puzzle = "   ".join(self.hashed_puzzle.split())
 
@@ -93,6 +93,9 @@ class Puzzle:
                     self.updated_puzzle += letter
             else:
                     self.updated_puzzle += self.guesses[letter.upper()]
+
+    def puzzle_matches_key(self):
+        return self.guesses == self.hashed_key
 
 puzzle = Puzzle()
 puzzle.get_key()
