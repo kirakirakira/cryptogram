@@ -8,10 +8,11 @@ class Puzzle:
                 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
     PUZZLES = ["I am",
-               "I am game", "You are"]
+               "game", "You"]
 
     def __init__(self):
-        self.hashed_key = dict()
+        self.hashed_key_forwards = dict()
+        self.hashed_key_backwards = dict()
         self.guesses = {
             Puzzle.ALPHABET[i]: '_' for i in range(len(Puzzle.ALPHABET))}
         self.puzzle = ""
@@ -21,9 +22,12 @@ class Puzzle:
     def get_key(self):
         original_alphabet = list.copy(Puzzle.ALPHABET)
         random.shuffle(original_alphabet)
-        self.hashed_key = {Puzzle.ALPHABET[i] : original_alphabet[i]
+        self.hashed_key_forwards = {Puzzle.ALPHABET[i] : original_alphabet[i]
                                   for i in range(len(Puzzle.ALPHABET))}
-        print(f'hashed key is {self.hashed_key}')
+        self.hashed_key_backwards = {original_alphabet[i] : Puzzle.ALPHABET[i]
+                                  for i in range(len(Puzzle.ALPHABET))}
+        print(f'hashed key is {self.hashed_key_forwards}')
+        print(f'hashed key is {self.hashed_key_backwards}')
 
     def get_puzzle(self):
         self.puzzle = random.choice(Puzzle.PUZZLES)
@@ -33,7 +37,7 @@ class Puzzle:
             if letter.isspace():
                 self.hashed_puzzle += letter
             else:
-                self.hashed_puzzle += self.hashed_key[letter.upper()]
+                self.hashed_puzzle += self.hashed_key_backwards[letter.upper()]
 
         self.hashed_puzzle = "   ".join(self.hashed_puzzle.split())
 
@@ -55,8 +59,9 @@ class Puzzle:
     def puzzle_matches_key(self):
         for letter in self.hashed_puzzle:
             if not letter.isspace():
-                if self.guesses[letter] == self.hashed_key[letter]:
+                if self.guesses[letter] == self.hashed_key_forwards[letter]:
                     continue
                 else:
                     return False
         return True
+

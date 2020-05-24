@@ -21,7 +21,9 @@ class Game:
         self.puzzle.update_puzzle()
         self.puzzle.display_puzzle()
 
-        while not self.puzzle.puzzle_matches_key():
+        won = False
+
+        while not won:
             letter_to_replace = input(
                 "What letter would you like to replace? ").upper()
             letter_to_replace_with = input(
@@ -30,7 +32,9 @@ class Game:
                 letter_to_replace, letter_to_replace_with)
             self.puzzle.update_puzzle()
             self.puzzle.display_puzzle()
-            # print(f'do keys match {self.puzzle.puzzle_matches_key()}')
+            won = self.puzzle.puzzle_matches_key()
+        
+        print("You won!")
 
     def play_game(self):
         play_again = self.ask_user_to_play()
