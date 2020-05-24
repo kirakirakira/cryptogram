@@ -56,7 +56,7 @@ class Puzzle:
 
     def __init__(self):
         self.key = dict()
-        self.guesses = {Puzzle.ALPHABET[i]                        : '' for i in range(len(Puzzle.ALPHABET))}
+        self.guesses = {Puzzle.ALPHABET[i]: '_' for i in range(len(Puzzle.ALPHABET))}
         self.puzzle = ""
 
     def get_key(self):
@@ -78,7 +78,26 @@ class Puzzle:
             else:
                 hashed_puzzle += self.key[letter.upper()]
 
+        hashed_puzzle = "   ".join(hashed_puzzle.split())
+
         transformed_puzzle = "   ".join(self.puzzle.split())
+        print(transformed_puzzle)
+
+        self.guesses['A'] = 'S'
+        self.guesses['B'] = 'S'
+        self.guesses['D'] = 'S'
+
+        updated_puzzle = ""
+        for letter in hashed_puzzle:
+            print(f'letter is {letter}')
+            if letter.isspace():
+                updated_puzzle += letter
+            else:
+                print(f'guess letter is {self.guesses[letter.upper()]}')
+                updated_puzzle += self.guesses[letter.upper()]
+
+        print(updated_puzzle)
+
         transformed_puzzle = re.sub("[a-zA-Z]", "_", transformed_puzzle)
 
         hashed_puzzle = "   ".join(hashed_puzzle.split())
@@ -86,7 +105,11 @@ class Puzzle:
         print(transformed_puzzle)
         print(hashed_puzzle)
 
+    def guess_a_letter(self, key, value):
+        self.guesses[key] = value
+
 puzzle = Puzzle()
 puzzle.get_key()
 puzzle.get_puzzle()
 puzzle.display_puzzle()
+puzzle.guess_a_letter('A', 'C')
