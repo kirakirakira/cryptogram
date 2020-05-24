@@ -12,6 +12,21 @@ random.shuffle(alphabet)
 key = {original_alphabet[i]: alphabet[i]
        for i in range(len(original_alphabet))}
 
+guesses = {original_alphabet[i]: '' for i in range(len(original_alphabet))}
+
+print(f'key is {key}')
+print(f'guesses are {guesses}')
+
+guesses['A'] = 'B'
+
+print(f'guesses are {guesses}')
+
+def are_guesses_correct(key, guesses):
+    return key == guesses
+
+print(are_guesses_correct(key, guesses))
+print(are_guesses_correct(key, key))
+
 hashed_puzzle = ""
 
 for letter in puzzle:
