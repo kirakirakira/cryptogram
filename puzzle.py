@@ -7,8 +7,8 @@ class Puzzle:
                 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
                 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
-    PUZZLES = ["I am going to play this game",
-               "I am going to win this game", "You are going to lose"]
+    PUZZLES = ["I am",
+               "I am game", "You are"]
 
     def __init__(self):
         self.hashed_key = dict()
@@ -21,8 +21,9 @@ class Puzzle:
     def get_key(self):
         original_alphabet = list.copy(Puzzle.ALPHABET)
         random.shuffle(original_alphabet)
-        self.hashed_key = {Puzzle.ALPHABET[i]: original_alphabet[i]
+        self.hashed_key = {Puzzle.ALPHABET[i] : original_alphabet[i]
                                   for i in range(len(Puzzle.ALPHABET))}
+        print(f'hashed key is {self.hashed_key}')
 
     def get_puzzle(self):
         self.puzzle = random.choice(Puzzle.PUZZLES)
@@ -52,4 +53,10 @@ class Puzzle:
         self.guesses[letter_to_replace] = letter_to_replace_with
 
     def puzzle_matches_key(self):
-        return self.guesses == self.hashed_key
+        for letter in self.hashed_puzzle:
+            if not letter.isspace():
+                if self.guesses[letter] == self.hashed_key[letter]:
+                    continue
+                else:
+                    return False
+        return True
