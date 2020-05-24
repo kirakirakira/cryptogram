@@ -1,21 +1,10 @@
-import re
-import random
+from puzzle import Puzzle
 
-puzzle = "I am going to play this game"
-
-alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
-            'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
-            'S', 'T', 'U', 'V', 'X', 'Y', 'Z']
-original_alphabet = list.copy(alphabet)
-random.shuffle(alphabet)
-
-key = {original_alphabet[i]: alphabet[i]
-       for i in range(len(original_alphabet))}
 
 class Game:
 
     def __init__(self):
-        pass
+        self.puzzle = Puzzle()
 
     def ask_user_to_play(self):
         response = input("Do you want to play? (y/n) ").lower()
@@ -25,17 +14,23 @@ class Game:
             print("See you later!")
         return response
 
-    def get_puzzle(self):
-        transformed_puzzle = "     ".join(puzzle.split())
-        transformed_puzzle = re.sub("[a-zA-Z]", "_ ", transformed_puzzle)
-
-        print(transformed_puzzle)
-
     def play_round(self):
-        self.get_puzzle()
+        self.puzzle.get_key()
+        self.puzzle.get_puzzle()
+        self.puzzle.hash_the_puzzle()
+        self.puzzle.update_puzzle()
+        self.puzzle.display_puzzle()
+
+        while not self.puzzle.puzzle_matches_key():
+            letter_to_replace = input("What letter would you like to replace? ").upper()
+            letter_to_replace_with = input("What letter would you like to replace it with? ").upper()
+            self.puzzle.guess_a_letter(letter_to_replace, letter_to_replace_with)
+            self.puzzle.update_puzzle()
+            self.puzzle.display_puzzle()
+            print(f'do keys match {self.puzzle.puzzle_matches_key()}')
 
     def play_game(self):
-        play_again = None
+        play_again = self.ask_user_to_play()
         while play_again != 'n':
             self.play_round()
             play_again = self.ask_user_to_play()
