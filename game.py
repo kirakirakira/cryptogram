@@ -5,10 +5,6 @@ class Game:
 
     def __init__(self):
         self.puzzle = Puzzle()
-        # self.puzzle.get_key()
-        # self.puzzle.get_puzzle()
-        # self.puzzle.hash_the_puzzle()
-        # self.turns = 0
         self.turns = 0
 
     def ask_user_to_play(self):
