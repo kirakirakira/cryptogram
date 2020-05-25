@@ -19,6 +19,13 @@ class Puzzle:
         self.hashed_puzzle = ""
         self.updated_puzzle = ""
 
+    def reset_puzzle(self):
+        self.guesses = {
+            Puzzle.ALPHABET[i]: '_' for i in range(len(Puzzle.ALPHABET))}
+        self.puzzle = ""
+        self.hashed_puzzle = ""
+        self.updated_puzzle = ""
+
     def get_key(self):
         original_alphabet = list.copy(Puzzle.ALPHABET)
         random.shuffle(original_alphabet)
@@ -26,8 +33,6 @@ class Puzzle:
                                   for i in range(len(Puzzle.ALPHABET))}
         self.hashed_key_backwards = {original_alphabet[i] : Puzzle.ALPHABET[i]
                                   for i in range(len(Puzzle.ALPHABET))}
-        print(f'hashed key is {self.hashed_key_forwards}')
-        print(f'hashed key is {self.hashed_key_backwards}')
 
     def get_puzzle(self):
         self.puzzle = random.choice(Puzzle.PUZZLES)
