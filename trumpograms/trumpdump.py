@@ -1,25 +1,40 @@
 import json
 import re
 
-f = open('trump.json')
 
-trump_dump = json.load(f)
+class Dump:
+    def __init__(self):
+        self.tweets = dict({})
+        self.clean_tweets = dict({})
+        self.load_tweets()
 
-tweets = dict({})
-re.sub("[a-zA-Z]", "_", "abcdefghiject")
+    def load_tweets(self):
+        f = open('trumpograms/trump.json')
 
-for index, tweet in enumerate(trump_dump, start=1):
-    tweets[index] = tweet['text']
+        trump_dump = json.load(f)
 
-new_tweets = { k:v for k, v in tweets.items() if not v.startswith('RT')}
-new_tweets = { k:v for k, v in new_tweets.items() if not v.startswith('https')}
+        re.sub("[a-zA-Z]", "_", "abcdefghiject")
 
-for index, tweet in new_tweets.items():
-    new_tweets[index] = re.sub(r"http\S+", '', new_tweets[index])
-    new_tweets[index] = re.sub(r"@\S+", '@_%&*#$%^', new_tweets[index])
+        for index, tweet in enumerate(trump_dump, start=1):
+            self.tweets[index] = tweet['text']
 
-for key, value in new_tweets.items():
-    print(key)
-    print(value)
+        self.clean_tweets = { k:v for k, v in self.tweets.items() if not v.startswith('RT')}
+        self.clean_tweets = { k:v for k, v in self.clean_tweets.items() if not v.startswith('https')}
 
-f.close()
+        for index, tweet in self.clean_tweets.items():
+            self.clean_tweets[index] = re.sub(r"http\S+", '', self.clean_tweets[index])
+            self.clean_tweets[index] = re.sub(r"@\S+", '@_%&*#$%^', self.clean_tweets[index])
+
+        f.close()
+
+    def get_tweets(self):
+        return self.clean_tweets
+
+    def display_tweets(self):
+        for key, value in self.clean_tweets.items():
+            print(key)
+            print(value)
+
+if __name__ == '__main__':
+    dump = Dump()
+    dump.display_tweets()

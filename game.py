@@ -1,4 +1,5 @@
 from puzzle import Puzzle
+from trumpograms.trumpdump import Dump
 
 
 class Game:
@@ -36,6 +37,8 @@ class Game:
     def __init__(self):
         self.puzzle = Puzzle()
         self.turns = 0
+        self.dump = Dump()
+        self.dump.display_tweets()
 
     def ask_user_to_play(self):
         response = input("Do you want to play? (y/n) ").lower()
