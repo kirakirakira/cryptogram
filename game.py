@@ -22,6 +22,17 @@ class Game:
 
     """
 
+    SEEYOULATER = """\
+   _____                                 _       _
+  / ____|                               | |     | |
+ | (___   ___  ___   _   _  ___  _   _  | | __ _| |_ ___ _ __
+  \___ \ / _ \/ _ \ | | | |/ _ \| | | | | |/ _` | __/ _ | '__|
+  ____) |  __|  __/ | |_| | (_) | |_| | | | (_| | ||  __| |
+ |_____/ \___|\___|  \__, |\___/ \__,_| |_|\__,_|\__\___|_|
+                      __/ |
+                     |___/
+    """
+
     def __init__(self):
         self.puzzle = Puzzle()
         self.turns = 0
@@ -36,7 +47,7 @@ class Game:
             self.puzzle.hash_the_puzzle()
             self.ask_user_to_set_difficulty()
         else:
-            print("See you later!")
+            print(f'{game.SEEYOULATER}')
         return response
 
     def ask_user_to_set_difficulty(self):
