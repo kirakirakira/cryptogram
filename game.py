@@ -2,6 +2,25 @@ from puzzle import Puzzle
 
 
 class Game:
+    WON = """\
+ __     __                               _
+ \ \   / /                              | |
+  \ \_/ ___  _   _  __      _____  _ __ | |
+   \   / _ \| | | | \ \ /\ / / _ \| '_ \| |
+    | | (_) | |_| |  \ V  V | (_) | | | |_|
+    |_|\___/ \__,_|   \_/\_/ \___/|_| |_(_)
+
+    """
+
+    LOST = """\
+ __     __           _           _   _
+ \ \   / /          | |         | | | |
+  \ \_/ ___  _   _  | | ___  ___| |_| |
+   \   / _ \| | | | | |/ _ \/ __| __| |
+    | | (_) | |_| | | | (_) \__ | |_|_|
+    |_|\___/ \__,_| |_|\___/|___/\__(_)
+
+    """
 
     def __init__(self):
         self.puzzle = Puzzle()
@@ -52,10 +71,10 @@ class Game:
             self.puzzle.display_puzzle()
             won = self.puzzle.puzzle_matches_key()
 
-        if self.turns >= 0:
-            print("You won!")
+        if self.turns >= 0 and won:
+            print(f'{game.WON}')
         else:
-            print("You lost!")
+            print(f'{game.LOST}')
 
     def play_game(self):
         play_again = self.ask_user_to_play()
