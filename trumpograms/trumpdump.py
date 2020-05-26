@@ -18,12 +18,16 @@ class Dump:
         for index, tweet in enumerate(trump_dump, start=1):
             self.tweets[index] = tweet['text']
 
-        self.clean_tweets = { k:v for k, v in self.tweets.items() if not v.startswith('RT')}
-        self.clean_tweets = { k:v for k, v in self.clean_tweets.items() if not v.startswith('https')}
+        self.clean_tweets = {
+            k: v for k, v in self.tweets.items() if not v.startswith('RT')}
+        self.clean_tweets = {
+            k: v for k, v in self.clean_tweets.items() if not v.startswith('https')}
 
         for index, tweet in self.clean_tweets.items():
-            self.clean_tweets[index] = re.sub(r"http\S+", '', self.clean_tweets[index])
-            self.clean_tweets[index] = re.sub(r"@\S+", '@_%&*#$%^', self.clean_tweets[index])
+            self.clean_tweets[index] = re.sub(
+                r"http\S+", '', self.clean_tweets[index])
+            self.clean_tweets[index] = re.sub(
+                r"@\S+", '@_%&*#$%^', self.clean_tweets[index])
 
         f.close()
 
@@ -34,6 +38,7 @@ class Dump:
         for key, value in self.clean_tweets.items():
             print(key)
             print(value)
+
 
 if __name__ == '__main__':
     dump = Dump()

@@ -1,6 +1,8 @@
 import re
 import random
 
+from trumpograms.trumpdump import Dump
+
 
 class Puzzle:
     ALPHABET = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
@@ -18,6 +20,8 @@ class Puzzle:
         self.puzzle = ""
         self.hashed_puzzle = ""
         self.updated_puzzle = ""
+        self.dump = Dump()
+        self.dump.display_tweets()
 
     def reset_puzzle(self):
         self.guesses = {
@@ -29,10 +33,10 @@ class Puzzle:
     def get_key(self):
         original_alphabet = list.copy(Puzzle.ALPHABET)
         random.shuffle(original_alphabet)
-        self.hashed_key_forwards = {Puzzle.ALPHABET[i] : original_alphabet[i]
-                                  for i in range(len(Puzzle.ALPHABET))}
-        self.hashed_key_backwards = {original_alphabet[i] : Puzzle.ALPHABET[i]
-                                  for i in range(len(Puzzle.ALPHABET))}
+        self.hashed_key_forwards = {Puzzle.ALPHABET[i]: original_alphabet[i]
+                                    for i in range(len(Puzzle.ALPHABET))}
+        self.hashed_key_backwards = {original_alphabet[i]: Puzzle.ALPHABET[i]
+                                     for i in range(len(Puzzle.ALPHABET))}
 
     def get_puzzle(self):
         self.puzzle = random.choice(Puzzle.PUZZLES)
@@ -69,4 +73,3 @@ class Puzzle:
                 else:
                     return False
         return True
-
