@@ -85,6 +85,7 @@ class Game:
         if self.turns >= 0 and won:
             print(f'{game.WON}')
         else:
+            # show the puzzle when you lose
             print(f'{game.LOST}')
 
     def play_game(self):

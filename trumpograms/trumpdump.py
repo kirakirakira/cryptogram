@@ -16,7 +16,7 @@ class Dump:
         re.sub("[a-zA-Z]", "_", "abcdefghiject")
 
         for index, tweet in enumerate(trump_dump, start=1):
-            self.tweets[index] = tweet['text']
+            self.tweets[index] = tweet['text'][:30]
 
         self.clean_tweets = {
             k: v for k, v in self.tweets.items() if not v.startswith('RT')}
@@ -32,7 +32,7 @@ class Dump:
         f.close()
 
     def get_tweets(self):
-        return self.clean_tweets
+        return list(self.clean_tweets.values())
 
     def display_tweets(self):
         for key, value in self.clean_tweets.items():

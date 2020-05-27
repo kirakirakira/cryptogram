@@ -21,7 +21,7 @@ class Puzzle:
         self.hashed_puzzle = ""
         self.updated_puzzle = ""
         self.dump = Dump()
-        self.dump.display_tweets()
+        self.puzzles = self.dump.get_tweets()
 
     def reset_puzzle(self):
         self.guesses = {
@@ -39,13 +39,13 @@ class Puzzle:
                                      for i in range(len(Puzzle.ALPHABET))}
 
     def get_puzzle(self):
-        self.puzzle = random.choice(Puzzle.PUZZLES)
+        self.puzzle = random.choice(self.puzzles)
 
     def hash_the_puzzle(self):
         for letter in self.puzzle:
             if letter.isspace():
                 self.hashed_puzzle += letter
-            else:
+            elif letter.upper() in Puzzle.ALPHABET: # need to only do this for letters and skip special characters
                 self.hashed_puzzle += self.hashed_key_backwards[letter.upper()]
 
         self.hashed_puzzle = "   ".join(self.hashed_puzzle.split())
