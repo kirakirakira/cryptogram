@@ -29,6 +29,7 @@ class Puzzle:
         self.puzzle = ""
         self.hashed_puzzle = ""
         self.updated_puzzle = ""
+        self.answer_puzzle = ""
 
     def get_key(self):
         original_alphabet = list.copy(Puzzle.ALPHABET)
@@ -58,9 +59,22 @@ class Puzzle:
             else:
                 self.updated_puzzle += self.guesses[letter.upper()]
 
+    def get_answer_puzzle(self):
+        self.answer_puzzle = ""
+        for letter in self.puzzle:
+            if letter.isspace():
+                self.answer_puzzle += letter
+            elif letter.upper() in Puzzle.ALPHABET:
+                self.answer_puzzle += letter.upper()
+        self.answer_puzzle = "   ".join(self.answer_puzzle.split())
+        return self.answer_puzzle
+
     def display_puzzle(self):
         print(self.updated_puzzle)
         print(self.hashed_puzzle)
+
+    def set_guesses_equal_to_key(self):
+        self.guesses = self.hashed_key_forwards
 
     def guess_a_letter(self, letter_to_replace, letter_to_replace_with):
         self.guesses[letter_to_replace] = letter_to_replace_with

@@ -77,16 +77,23 @@ class Game:
             self.puzzle.guess_a_letter(
                 letter_to_replace, letter_to_replace_with)
             self.turns -= 1
-            print(f'turns left {self.turns}')
-            self.puzzle.update_puzzle()
-            self.puzzle.display_puzzle()
+            if self.turns > 0:
+                print(f'turns left {self.turns}')
+                self.puzzle.update_puzzle()
+                self.puzzle.display_puzzle()
             won = self.puzzle.puzzle_matches_key()
 
         if self.turns >= 0 and won:
             print(f'{game.WON}')
         else:
-            # show the puzzle when you lose
             print(f'{game.LOST}')
+            print("Answer is: ")
+            self.puzzle.set_guesses_equal_to_key()
+            self.puzzle.update_puzzle()
+            self.puzzle.display_puzzle()
+            print()
+            print("*****"*5)
+            print()
 
     def play_game(self):
         play_again = self.ask_user_to_play()
