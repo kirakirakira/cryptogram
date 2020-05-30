@@ -3,9 +3,11 @@ import io
 import unittest
 import re
 
-from game import game
+from game import Game
 
 class TestSum(unittest.TestCase):
+    def setUp(self):
+        self.game = Game()
 
     def test_input_yes(self):
         user_input = 'y'
@@ -13,7 +15,7 @@ class TestSum(unittest.TestCase):
         expected = "Let's play!"
 
         with patch('builtins.input', side_effect=user_input):
-            actual = game.get_start()
+            actual = self.game.get_start()
         self.assertEqual(actual, expected)
 
     def test_input_no(self):
@@ -22,7 +24,7 @@ class TestSum(unittest.TestCase):
         expected = "See you later!"
 
         with patch('builtins.input', side_effect=user_input):
-            actual = game.get_start()
+            actual = self.game.get_start()
         self.assertEqual(actual, expected)
 
     def test_get_puzzle(self):
@@ -30,7 +32,7 @@ class TestSum(unittest.TestCase):
         expected = "     ".join(puzzle.split())
         expected = re.sub("[a-zA-Z]", "_ ", expected)
 
-        actual = game.get_puzzle()
+        actual = self.game.get_puzzle()
 
         self.assertEqual(actual, expected)
 
