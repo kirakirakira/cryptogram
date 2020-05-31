@@ -74,11 +74,13 @@ class Game:
                 "What letter would you like to replace? ").upper()
             letter_to_replace_with = input(
                 "What letter would you like to replace it with? ").upper()
-            self.puzzle.guess_a_letter(
+            outcome = self.puzzle.guess_a_letter(
                 letter_to_replace, letter_to_replace_with)
-            self.turns -= 1
+            if outcome == 0:
+                self.turns -= 1
             if self.turns > 0:
-                print(f'turns left {self.turns}')
+                print(f'Turns left {self.turns}')
+                print()
                 self.puzzle.update_puzzle()
                 self.puzzle.display_puzzle()
             won = self.puzzle.puzzle_matches_key()
