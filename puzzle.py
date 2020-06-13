@@ -74,7 +74,6 @@ class Puzzle:
         self.guesses = self.hashed_key_forwards
 
     def guess_a_letter(self, letter_to_replace, letter_to_replace_with):
-        print(f'letter to replace: {letter_to_replace}, letter to replace with: {letter_to_replace_with}')
         # want letter_to_replace_with to not have been used already
         if letter_to_replace_with in self.guesses.values():
             print()

@@ -63,6 +63,20 @@ class Game:
             self.turns = num_unique_characters * 1
         print(f'difficulty is {self.turns}')
 
+    def print_won_or_lost(self, won):
+        if self.turns >= 0 and won:
+            print(f'{game.WON}')
+        else:
+            print(f'{game.LOST}')
+            print("Answer is: ")
+            self.puzzle.set_guesses_equal_to_key()
+            self.puzzle.update_puzzle()
+            self.puzzle.display_puzzle()
+            print()
+            print("*****"*5)
+            print()
+
+
     def play_round(self):
         self.puzzle.update_puzzle()
         self.puzzle.display_puzzle()
@@ -76,26 +90,19 @@ class Game:
                 "What letter would you like to replace it with? ").upper()
             outcome = self.puzzle.guess_a_letter(
                 letter_to_replace, letter_to_replace_with)
+
             if outcome == 0:
                 self.turns -= 1
+
             if self.turns > 0:
                 print(f'Turns left {self.turns}')
                 print()
                 self.puzzle.update_puzzle()
                 self.puzzle.display_puzzle()
+
             won = self.puzzle.puzzle_matches_key()
 
-        if self.turns >= 0 and won:
-            print(f'{game.WON}')
-        else:
-            print(f'{game.LOST}')
-            print("Answer is: ")
-            self.puzzle.set_guesses_equal_to_key()
-            self.puzzle.update_puzzle()
-            self.puzzle.display_puzzle()
-            print()
-            print("*****"*5)
-            print()
+        self.print_won_or_lost(won)
 
     def play_game(self):
         play_again = self.ask_user_to_play()
