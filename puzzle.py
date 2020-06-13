@@ -9,9 +9,6 @@ class Puzzle:
                 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
                 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
-    PUZZLES = ["I am",
-               "game", "You"]
-
     def __init__(self):
         self.hashed_key_forwards = dict()
         self.hashed_key_backwards = dict()
@@ -46,7 +43,7 @@ class Puzzle:
         for letter in self.puzzle:
             if letter.isspace():
                 self.hashed_puzzle += letter
-            elif letter.upper() in Puzzle.ALPHABET: # need to only do this for letters and skip special characters
+            elif letter.upper() in Puzzle.ALPHABET: # not including special characters in the puzzle, only letters in the alphabet
                 self.hashed_puzzle += self.hashed_key_backwards[letter.upper()]
 
         self.hashed_puzzle = "   ".join(self.hashed_puzzle.split())
@@ -77,7 +74,17 @@ class Puzzle:
         self.guesses = self.hashed_key_forwards
 
     def guess_a_letter(self, letter_to_replace, letter_to_replace_with):
-        self.guesses[letter_to_replace] = letter_to_replace_with
+        # want letter_to_replace_with to not have been used already
+        if letter_to_replace_with in self.guesses.values():
+            print()
+            print('!!!'*12)
+            print(f'You already used that one, try again')
+            print('!!!'*12)
+            print()
+            return -1
+        else:
+            self.guesses[letter_to_replace] = letter_to_replace_with
+            return 0
 
     def puzzle_matches_key(self):
         for letter in self.hashed_puzzle:
