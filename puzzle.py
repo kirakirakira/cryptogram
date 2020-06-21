@@ -12,6 +12,7 @@ class Puzzle:
     def __init__(self):
         self.puzzle = ""
         self.hashed_puzzle = ""
+        self.guessed_puzzle = ""
         self.alpha_to_hash = dict()
         self.alpha_to_guesses = {
             Puzzle.ALPHABET[i]: '_' for i in range(len(Puzzle.ALPHABET))}
@@ -19,6 +20,7 @@ class Puzzle:
     def reset_puzzle(self):
         self.puzzle = ""
         self.hashed_puzzle = ""
+        self.guessed_puzzle = ""
         self.alpha_to_hash = dict()
         self.alpha_to_guesses = {
             Puzzle.ALPHABET[i]: '_' for i in range(len(Puzzle.ALPHABET))}
@@ -40,20 +42,53 @@ class Puzzle:
 
         self.hashed_puzzle = "  ".join(self.hashed_puzzle.split())
 
-    def update_puzzle_with_guess(self, alpha, guess):
-        self.alpha_to_guesses[alpha.upper()] = guess.upper()
+    def update_guesses(self, alpha, guess):
+        if guess in self.alpha_to_guesses.values():
+            return True
+        else:
+            self.alpha_to_guesses[alpha.upper()] = guess.upper()
+            return False
 
-    def display_puzzle(self):
-        print(self.puzzle)
-        print(self.alpha_to_hash)
+    def update_guessed_puzzle(self):
+        self.guessed_puzzle = ""
+        for letter in self.hashed_puzzle:
+            if not letter.isalpha():
+                self.guessed_puzzle += letter
+            elif letter.upper() in Puzzle.ALPHABET:
+                self.guessed_puzzle += self.alpha_to_guesses[letter.upper()]
+
+        self.guessed_puzzle = "  ".join(self.guessed_puzzle.split())
+
+    def puzzle_matches_key(self):
+        for letter in self.hashed_puzzle:
+            if not letter.isspace():
+                if self.alpha_to_guesses[letter] == self.alpha_to_hash[letter]:
+                    continue
+                else:
+                    return False
+        return True
+
+
+    def display_guessed_puzzle(self):
+        print(self.guessed_puzzle)
+
+    def display_hashed_puzzle(self):
         print(self.hashed_puzzle)
-        print(self.alpha_to_guesses)
 
 
 if __name__ == '__main__':
     puzzle = Puzzle()
     puzzle.select_puzzle()
     puzzle.hash_puzzle()
-    puzzle.display_puzzle()
-    puzzle.update_puzzle_with_guess('A', 'B')
-    puzzle.display_puzzle()
+    puzzle.update_guesses('A', 'B')
+    puzzle.update_guesses('F', 'E')
+    puzzle.update_guesses('T', 'E')
+    puzzle.update_guesses('C', 'E')
+    puzzle.update_guesses('D', 'E')
+    puzzle.update_guesses('L', 'E')
+    puzzle.update_guesses('G', 'E')
+    puzzle.update_guesses('H', 'E')
+    puzzle.update_guesses('I', 'E')
+    puzzle.update_guessed_puzzle()
+    puzzle.display_guessed_puzzle()
+    puzzle.display_hashed_puzzle()
