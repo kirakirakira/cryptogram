@@ -1,4 +1,5 @@
 import random
+from soup import Soup
 
 
 class Puzzle:
@@ -16,6 +17,7 @@ class Puzzle:
         self.alpha_to_hash = dict()
         self.alpha_to_guesses = {
             Puzzle.ALPHABET[i]: '_' for i in range(len(Puzzle.ALPHABET))}
+        self.soup = Soup()
 
     def reset_puzzle(self):
         self.puzzle = ""
@@ -26,7 +28,7 @@ class Puzzle:
             Puzzle.ALPHABET[i]: '_' for i in range(len(Puzzle.ALPHABET))}
 
     def select_puzzle(self):
-        self.puzzle = random.choice(Puzzle.PUZZLES)
+        self.puzzle = random.choice(self.soup.get_episodes())
 
     def hash_puzzle(self):
         alphabet = list.copy(Puzzle.ALPHABET)
@@ -61,7 +63,7 @@ class Puzzle:
 
     def puzzle_matches_key(self):
         for letter in self.hashed_puzzle:
-            if not letter.isspace():
+            if not letter.isspace() and letter != "\"":
                 if self.alpha_to_guesses[letter] == self.alpha_to_hash[letter]:
                     continue
                 else:
