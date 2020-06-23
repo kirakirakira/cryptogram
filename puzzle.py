@@ -35,6 +35,9 @@ class Puzzle:
         random.shuffle(alphabet)
         self.alpha_to_hash = {
             Puzzle.ALPHABET[i]: alphabet[i] for i in range(len(Puzzle.ALPHABET))}
+        self.hash_to_alpha = {
+            alphabet[i]: Puzzle.ALPHABET[i]
+            for i in range(len(Puzzle.ALPHABET))}
 
         for letter in self.puzzle:
             if not letter.isalpha():
@@ -64,12 +67,13 @@ class Puzzle:
     def puzzle_matches_key(self):
         for letter in self.hashed_puzzle:
             if not letter.isspace() and letter != "\"":
-                if self.alpha_to_guesses[letter] == self.alpha_to_hash[letter]:
+                # don't use letter here, need to look up the alpha letter for each letter that's in the hash
+                lookup = self.hash_to_alpha[letter]
+                if self.alpha_to_guesses[lookup] == self.alpha_to_hash[lookup]:
                     continue
                 else:
                     return False
         return True
-
 
     def display_guessed_puzzle(self):
         print(self.guessed_puzzle)
