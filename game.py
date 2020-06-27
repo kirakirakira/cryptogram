@@ -53,10 +53,8 @@ class Game:
             print(f'{game.SEEYOULATER}')
         return response
 
-    def ask_user_to_set_difficulty(self):
-        difficulty = input(
-            "What difficulty would you like to play? (easy (E)/medium (M)/hard (H)) ").upper()
-        num_unique_characters = len(set("".join(self.puzzle.puzzle.split())))
+    def calculate_difficulty(self, difficulty):
+        num_unique_characters = len(set("".join(ch.lower() for ch in self.puzzle.puzzle if ch.isalpha())))
         print(f"Number of unique characters is {num_unique_characters}")
 
         if difficulty == 'EASY' or difficulty == 'E':
@@ -66,6 +64,11 @@ class Game:
         else:
             self.turns = num_unique_characters * 1
         print(f'difficulty is {self.turns}')
+
+    def ask_user_to_set_difficulty(self):
+        difficulty = input(
+            "What difficulty would you like to play? (easy (E)/medium (M)/hard (H)) ").upper()
+        self.calculate_difficulty(difficulty)
 
     def print_won_or_lost(self, won):
         if self.turns >= 0 and won:
@@ -91,6 +94,9 @@ class Game:
 
             if not already_used:
                 self.turns -= 1
+            else:
+                print()
+                print(f'Already used that letter in the puzzle, try again.')
 
             if self.turns > 0:
                 print(f'Turns left {self.turns}')
