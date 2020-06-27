@@ -42,8 +42,11 @@ class Game:
         response = input("Do you want to play? (y/n) ").lower()
         if response == "y":
             print("Let's play!")
+            self.turns = 0
+            self.won = False
             self.puzzle.reset_puzzle()
             self.puzzle.select_puzzle()
+            self.puzzle.display_puzzle()
             self.puzzle.hash_puzzle()
             self.ask_user_to_set_difficulty()
         else:
@@ -94,7 +97,6 @@ class Game:
                 print()
 
             self.won = self.puzzle.puzzle_matches_key()
-            print(f'won is {self.won}')
         
         if self.turns >= 0 and self.won:
             print(f'{game.WON}')

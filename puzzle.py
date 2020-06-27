@@ -15,6 +15,7 @@ class Puzzle:
         self.hashed_puzzle = ""
         self.guessed_puzzle = ""
         self.alpha_to_hash = dict()
+        self.hash_to_alpha = dict()
         self.alpha_to_guesses = {
             Puzzle.ALPHABET[i]: '_' for i in range(len(Puzzle.ALPHABET))}
         self.soup = Soup()
@@ -24,6 +25,7 @@ class Puzzle:
         self.hashed_puzzle = ""
         self.guessed_puzzle = ""
         self.alpha_to_hash = dict()
+        self.hash_to_alpha = dict()
         self.alpha_to_guesses = {
             Puzzle.ALPHABET[i]: '_' for i in range(len(Puzzle.ALPHABET))}
 
@@ -66,10 +68,8 @@ class Puzzle:
 
     def puzzle_matches_key(self):
         for letter in self.hashed_puzzle:
-            if not letter.isspace() and letter != "\"":
-                # don't use letter here, need to look up the alpha letter for each letter that's in the hash
-                lookup = self.hash_to_alpha[letter]
-                if self.alpha_to_guesses[lookup] == self.alpha_to_hash[lookup]:
+            if letter.isalpha():
+                if self.alpha_to_guesses[letter] == self.hash_to_alpha[letter]:
                     continue
                 else:
                     return False
@@ -80,6 +80,9 @@ class Puzzle:
 
     def display_hashed_puzzle(self):
         print(self.hashed_puzzle)
+
+    def display_puzzle(self):
+        print(self.puzzle)
 
 
 if __name__ == '__main__':
