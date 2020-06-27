@@ -89,10 +89,19 @@ class Game:
 
             letter_to_replace = input("What letter would you like to replace? ").upper()
             guess = input("What letter would you like to replace it with? ").upper()
-            already_used = self.puzzle.update_guesses(letter_to_replace, guess)
+
+            if letter_to_replace != "" and guess != "":
+                blanks = False
+                already_used = self.puzzle.update_guesses(letter_to_replace, guess)
+            else:
+                blanks = True
+                already_used = True
 
             if not already_used:
                 self.turns -= 1
+            elif blanks:
+                print()
+                print(f'Try again')
             else:
                 print()
                 print(f'Already used that letter in the puzzle, try again.')
