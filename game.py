@@ -55,7 +55,6 @@ class Game:
 
     def calculate_difficulty(self, difficulty):
         num_unique_characters = len(set("".join(ch.lower() for ch in self.puzzle.puzzle if ch.isalpha())))
-        print(f"Number of unique characters is {num_unique_characters}")
 
         if difficulty == 'EASY' or difficulty == 'E':
             self.turns = num_unique_characters * 5
@@ -108,6 +107,9 @@ class Game:
             print(f'{game.WON}')
         else:
             print(f'{game.LOST}')
+            self.puzzle.display_puzzle()
+            self.puzzle.display_hashed_puzzle()
+            print()
 
     def play_game(self):
         play_again = self.ask_user_to_play()

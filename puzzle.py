@@ -82,4 +82,4 @@ class Puzzle:
         print(self.hashed_puzzle)
 
     def display_puzzle(self):
-        print(self.puzzle)
+        print("  ".join(self.puzzle.split()))
