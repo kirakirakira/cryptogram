@@ -34,7 +34,7 @@ class Puzzle:
 
     def hash_puzzle(self):
         alphabet = list.copy(Puzzle.ALPHABET)
-        random.shuffle(alphabet)
+        alphabet = random.sample(alphabet, len(alphabet))
         self.alpha_to_hash = {
             Puzzle.ALPHABET[i]: alphabet[i] for i in range(len(Puzzle.ALPHABET))}
         self.hash_to_alpha = {
