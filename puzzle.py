@@ -83,21 +83,3 @@ class Puzzle:
 
     def display_puzzle(self):
         print(self.puzzle)
-
-
-if __name__ == '__main__':
-    puzzle = Puzzle()
-    puzzle.select_puzzle()
-    puzzle.hash_puzzle()
-    puzzle.update_guesses('A', 'B')
-    puzzle.update_guesses('F', 'E')
-    puzzle.update_guesses('T', 'E')
-    puzzle.update_guesses('C', 'E')
-    puzzle.update_guesses('D', 'E')
-    puzzle.update_guesses('L', 'E')
-    puzzle.update_guesses('G', 'E')
-    puzzle.update_guesses('H', 'E')
-    puzzle.update_guesses('I', 'E')
-    puzzle.update_guessed_puzzle()
-    puzzle.display_guessed_puzzle()
-    puzzle.display_hashed_puzzle()
