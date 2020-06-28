@@ -42,6 +42,7 @@ class Game:
         response = input("Do you want to play? (y/n) ").lower()
         if response == "y":
             print("Let's play!")
+            # create a reset the game function
             self.turns = 0
             self.won = False
             self.puzzle.reset_puzzle()
@@ -62,6 +63,8 @@ class Game:
             self.turns = num_unique_characters * 3
         else:
             self.turns = num_unique_characters * 1
+
+        # separate the display from the difficulty calculation
         print(f'difficulty is {self.turns}')
 
     def ask_user_to_set_difficulty(self):
@@ -82,6 +85,9 @@ class Game:
 
 
     def play_round(self):
+
+        # separate the logic from the display/prints
+        
         while not self.won and self.turns > 0:
             self.puzzle.update_guessed_puzzle()
             self.puzzle.display_guessed_puzzle()

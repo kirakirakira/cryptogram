@@ -50,6 +50,7 @@ class Puzzle:
         self.hashed_puzzle = "  ".join(self.hashed_puzzle.split())
 
     def update_guesses(self, alpha, guess):
+        # separate the return from actually doing the guesses
         if guess in self.alpha_to_guesses.values():
             return True
         else:
