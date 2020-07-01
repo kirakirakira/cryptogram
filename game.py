@@ -87,7 +87,7 @@ class Game:
     def play_round(self):
 
         # separate the logic from the display/prints
-        
+
         while not self.won and self.turns > 0:
             self.puzzle.update_guessed_puzzle()
             self.puzzle.display_guessed_puzzle()
@@ -95,15 +95,16 @@ class Game:
 
             letter_to_replace = input("What letter would you like to replace? ").upper()
             guess = input("What letter would you like to replace it with? ").upper()
+            already_used = self.puzzle.guess_already_used(letter_to_replace, guess)
 
+            # change this to a function
             if letter_to_replace != "" and guess != "":
                 blanks = False
-                already_used = self.puzzle.update_guesses(letter_to_replace, guess)
             else:
                 blanks = True
-                already_used = True
 
             if not already_used:
+                self.puzzle.update_guesses(letter_to_replace, guess)
                 self.turns -= 1
             elif blanks:
                 print()
@@ -117,7 +118,7 @@ class Game:
                 print()
 
             self.won = self.puzzle.puzzle_matches_key()
-        
+
         if self.turns >= 0 and self.won:
             print(f'{game.WON}')
         else:

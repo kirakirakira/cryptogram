@@ -50,11 +50,12 @@ class Puzzle:
         self.hashed_puzzle = "  ".join(self.hashed_puzzle.split())
 
     def update_guesses(self, alpha, guess):
-        # separate the return from actually doing the guesses
+        self.alpha_to_guesses[alpha.upper()] = guess.upper()
+
+    def guess_already_used(self, alpha, guess):
         if guess in self.alpha_to_guesses.values():
             return True
         else:
-            self.alpha_to_guesses[alpha.upper()] = guess.upper()
             return False
 
     def update_guessed_puzzle(self):
