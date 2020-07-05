@@ -7,7 +7,7 @@ import re
 from puzzle import Puzzle
 
 
-def blah(values):
+def puzzle(values):
     return "Die, Jerk"
 
 
@@ -22,14 +22,14 @@ class TestPuzzle(unittest.TestCase):
         self.puzzle = Puzzle()
 
     def test_select_puzzle(self):
-        with mock.patch('random.choice', blah):
+        with mock.patch('random.choice', puzzle):
             self.puzzle.select_puzzle()
             actual = self.puzzle.puzzle
 
         self.assertEqual(actual, "Die, Jerk")
 
     def test_hash_puzzle(self):
-        with mock.patch('random.choice', blah):
+        with mock.patch('random.choice', puzzle):
             self.puzzle.select_puzzle()
             with mock.patch('random.sample', alphabet):
                 self.puzzle.hash_puzzle()
@@ -55,6 +55,29 @@ class TestPuzzle(unittest.TestCase):
         expected = True
 
         self.assertEqual(actual, expected)
+
+    def test_update_guessed_puzzle(self):
+        with mock.patch('random.choice', puzzle):
+            self.puzzle.select_puzzle()
+            with mock.patch('random.sample', alphabet):
+                self.puzzle.hash_puzzle()
+                actual = self.puzzle.hashed_puzzle
+                expected = "VLW,  MWYT"
+        alpha = 'V'
+        guess = 'D'
+        self.puzzle.update_guesses(alpha, guess)
+        self.puzzle.update_guessed_puzzle()
+
+        actual = self.puzzle.guessed_puzzle
+        expected = "D__,  ____"
+        
+        self.assertEqual(actual, expected)
+
+    def test_win(self):
+        with mock.patch('self.hashed_puzzle', hashed_puzzle):
+            with mock.patch('self.alpha_to_guesses', alpha_to_guesses):
+                with mock.patch('self.hash_to_alpha', hash_to_alpha):
+                    self.puzzle.puzzle_matches_key()
 
 
 if __name__ == '__main__':
