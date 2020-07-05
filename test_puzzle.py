@@ -7,6 +7,10 @@ import re
 from puzzle import Puzzle
 
 
+ALPHABET = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
+            'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
+            'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+
 def puzzle(values):
     return "Die, Jerk"
 
@@ -16,35 +20,23 @@ def alphabet(values, length):
             'L', 'M', 'T', 'R', 'K', 'I', 'G', 'S', 'N',
             'Y', 'Z', 'P', 'C', 'Q', 'X', 'F', 'J', 'H']
 
-def hashed_puzzle(values):
-    return "VLW, MWYT"
-
-def alpha_to_guesses(values):
-    return {'A': '', 'B': '', 'C': ''}
-
-def hash_to_alpha(values):
-    return {'B': 'A'}
-
 
 class TestPuzzle(unittest.TestCase):
     def setUp(self):
         self.puzzle = Puzzle()
 
-    def test_select_puzzle(self):
-        with mock.patch('random.choice', puzzle):
-            self.puzzle.select_puzzle()
-            actual = self.puzzle.puzzle
-
-        self.assertEqual(actual, "Die, Jerk")
-
-    def test_hash_puzzle(self):
         with mock.patch('random.choice', puzzle):
             self.puzzle.select_puzzle()
             with mock.patch('random.sample', alphabet):
                 self.puzzle.hash_puzzle()
-                actual = self.puzzle.hashed_puzzle
-                expected = "VLW,  MWYT"
 
+    def test_select_puzzle(self):
+        actual = self.puzzle.puzzle
+        self.assertEqual(actual, "Die, Jerk")
+
+    def test_hash_puzzle(self):
+        actual = self.puzzle.hashed_puzzle
+        expected = "VLW,  MWYT"
         self.assertEqual(actual, expected)
 
     def test_guess_already_used_false(self):
@@ -52,7 +44,6 @@ class TestPuzzle(unittest.TestCase):
         guess = 'B'
         actual = self.puzzle.guess_already_used(alpha, guess)
         expected = False
-
         self.assertEqual(actual, expected)
 
     def test_guess_already_used_true(self):
@@ -62,16 +53,9 @@ class TestPuzzle(unittest.TestCase):
 
         actual = self.puzzle.guess_already_used(alpha, guess)
         expected = True
-
         self.assertEqual(actual, expected)
 
     def test_update_guessed_puzzle(self):
-        with mock.patch('random.choice', puzzle):
-            self.puzzle.select_puzzle()
-            with mock.patch('random.sample', alphabet):
-                self.puzzle.hash_puzzle()
-                actual = self.puzzle.hashed_puzzle
-                expected = "VLW,  MWYT"
         alpha = 'V'
         guess = 'D'
         self.puzzle.update_guesses(alpha, guess)
@@ -79,35 +63,54 @@ class TestPuzzle(unittest.TestCase):
 
         actual = self.puzzle.guessed_puzzle
         expected = "D__,  ____"
-        
         self.assertEqual(actual, expected)
 
     def test_lose(self):
-        with mock.patch('random.choice', puzzle):
-            self.puzzle.select_puzzle()
-            with mock.patch('random.sample', alphabet):
-                self.puzzle.hash_puzzle()
-                actual = self.puzzle.hashed_puzzle
-
+        actual = self.puzzle.hashed_puzzle
         expected = False
         actual = self.puzzle.puzzle_matches_key()
         self.assertEqual(actual, expected)
 
     def test_win(self):
-        with mock.patch('random.choice', puzzle):
-            self.puzzle.select_puzzle()
-            with mock.patch('random.sample', alphabet):
-                self.puzzle.hash_puzzle()
-                actual = self.puzzle.hashed_puzzle
-
-        alpha_to_guesses = {'V': 'D', 'L': 'I', 'W': 'E', 'M': 'J', 'Y': 'R', 'T': 'K'}
+        actual = self.puzzle.hashed_puzzle
+        alpha_to_guesses = {'V': 'D', 'L': 'I',
+                            'W': 'E', 'M': 'J', 'Y': 'R', 'T': 'K'}
 
         for alpha, guess in alpha_to_guesses.items():
             self.puzzle.update_guesses(alpha, guess)
-        
+
         expected = True
         actual = self.puzzle.puzzle_matches_key()
         self.assertEqual(actual, expected)
+
+    def test_reset_puzzle(self):
+        self.puzzle.reset_puzzle()
+
+        actual_puzzle = self.puzzle.puzzle
+        expected_puzzle = ""
+        self.assertEqual(actual_puzzle, expected_puzzle)
+
+        actual_hashed_puzzle = self.puzzle.hashed_puzzle
+        expected_hashed_puzzle = ""
+        self.assertEqual(actual_hashed_puzzle, expected_hashed_puzzle)
+
+        actual_guessed_puzzle = self.puzzle.guessed_puzzle
+        expected_guessed_puzzle = ""
+        self.assertEqual(actual_guessed_puzzle, expected_guessed_puzzle)
+
+        actual_alpha_to_hash = self.puzzle.alpha_to_hash
+        expected_alpha_to_hash = dict()
+        self.assertEqual(actual_alpha_to_hash, expected_alpha_to_hash)
+
+        actual_hash_to_alpha = self.puzzle.hash_to_alpha
+        expected_hash_to_alpha = dict()
+        self.assertEqual(actual_hash_to_alpha, expected_hash_to_alpha)
+
+        actual_alpha_to_guesses = self.puzzle.alpha_to_guesses
+        expected_alpha_to_guesses = {
+            ALPHABET[i]: '_' for i in range(len(ALPHABET))}
+        self.assertEqual(actual_alpha_to_guesses, expected_alpha_to_guesses)
+
 
 if __name__ == '__main__':
     unittest.main()
