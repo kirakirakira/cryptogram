@@ -16,6 +16,15 @@ def alphabet(values, length):
             'L', 'M', 'T', 'R', 'K', 'I', 'G', 'S', 'N',
             'Y', 'Z', 'P', 'C', 'Q', 'X', 'F', 'J', 'H']
 
+def hashed_puzzle(values):
+    return "VLW, MWYT"
+
+def alpha_to_guesses(values):
+    return {'A': '', 'B': '', 'C': ''}
+
+def hash_to_alpha(values):
+    return {'B': 'A'}
+
 
 class TestPuzzle(unittest.TestCase):
     def setUp(self):
@@ -73,12 +82,32 @@ class TestPuzzle(unittest.TestCase):
         
         self.assertEqual(actual, expected)
 
-    def test_win(self):
-        with mock.patch('self.hashed_puzzle', hashed_puzzle):
-            with mock.patch('self.alpha_to_guesses', alpha_to_guesses):
-                with mock.patch('self.hash_to_alpha', hash_to_alpha):
-                    self.puzzle.puzzle_matches_key()
+    def test_lose(self):
+        with mock.patch('random.choice', puzzle):
+            self.puzzle.select_puzzle()
+            with mock.patch('random.sample', alphabet):
+                self.puzzle.hash_puzzle()
+                actual = self.puzzle.hashed_puzzle
 
+        expected = False
+        actual = self.puzzle.puzzle_matches_key()
+        self.assertEqual(actual, expected)
+
+    def test_win(self):
+        with mock.patch('random.choice', puzzle):
+            self.puzzle.select_puzzle()
+            with mock.patch('random.sample', alphabet):
+                self.puzzle.hash_puzzle()
+                actual = self.puzzle.hashed_puzzle
+
+        alpha_to_guesses = {'V': 'D', 'L': 'I', 'W': 'E', 'M': 'J', 'Y': 'R', 'T': 'K'}
+
+        for alpha, guess in alpha_to_guesses.items():
+            self.puzzle.update_guesses(alpha, guess)
+        
+        expected = True
+        actual = self.puzzle.puzzle_matches_key()
+        self.assertEqual(actual, expected)
 
 if __name__ == '__main__':
     unittest.main()
