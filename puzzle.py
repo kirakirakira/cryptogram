@@ -7,9 +7,6 @@ class Puzzle:
                 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
                 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
-    PUZZLES = ['Kiss and Tell', 'Forgiveness and Stuff', 'Concert Interruptus', 'That Damn Donna Reed',
-               'The Third Lorelai', 'Love, Daisies, and Troubadours']
-
     def __init__(self):
         self.puzzle = ""
         self.hashed_puzzle = ""

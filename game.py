@@ -121,7 +121,7 @@ class Game:
 
     def play_game(self):
         play_again = self.ask_user_to_play()
-        while play_again != 'n':
+        while play_again == 'y':
             self.play_round()
             play_again = self.ask_user_to_play()
 
