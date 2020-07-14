@@ -41,20 +41,22 @@ class Game:
         self.turns = 0
         self.won = False
 
+    def set_game(self):
+        self.turns = 0
+        self.won = False
+        self.puzzle.reset_puzzle()
+        self.puzzle.select_puzzle()
+        print()
+        self.puzzle.display_puzzle()
+        print()
+        self.puzzle.hash_puzzle()
+        self.ask_user_to_set_difficulty()
+
     def ask_user_to_play(self):
         response = input("Do you want to play? (y/n) ").lower()
         if response == "y":
             print("Let's play!")
-            # create a reset the game function
-            self.turns = 0
-            self.won = False
-            self.puzzle.reset_puzzle()
-            self.puzzle.select_puzzle()
-            print()
-            self.puzzle.display_puzzle()
-            print()
-            self.puzzle.hash_puzzle()
-            self.ask_user_to_set_difficulty()
+            self.set_game()
         else:
             print(f'{game.SEEYOULATER}')
         return response
