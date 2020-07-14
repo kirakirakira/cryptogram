@@ -1,7 +1,5 @@
-import re
 import random
-
-from trumpograms.trumpdump import Dump
+from soup import Soup
 
 
 class Puzzle:
@@ -10,87 +8,77 @@ class Puzzle:
                 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
     def __init__(self):
-        self.hashed_key_forwards = dict()
-        self.hashed_key_backwards = dict()
-        self.guesses = {
-            Puzzle.ALPHABET[i]: '_' for i in range(len(Puzzle.ALPHABET))}
         self.puzzle = ""
         self.hashed_puzzle = ""
-        self.updated_puzzle = ""
-        self.dump = Dump()
-        self.puzzles = self.dump.get_tweets()
+        self.guessed_puzzle = ""
+        self.alpha_to_hash = dict()
+        self.hash_to_alpha = dict()
+        self.alpha_to_guesses = {
+            Puzzle.ALPHABET[i]: '_' for i in range(len(Puzzle.ALPHABET))}
+        self.soup = Soup()
 
     def reset_puzzle(self):
-        self.guesses = {
-            Puzzle.ALPHABET[i]: '_' for i in range(len(Puzzle.ALPHABET))}
         self.puzzle = ""
         self.hashed_puzzle = ""
-        self.updated_puzzle = ""
-        self.answer_puzzle = ""
+        self.guessed_puzzle = ""
+        self.alpha_to_hash = dict()
+        self.hash_to_alpha = dict()
+        self.alpha_to_guesses = {
+            Puzzle.ALPHABET[i]: '_' for i in range(len(Puzzle.ALPHABET))}
 
-    def get_key(self):
-        original_alphabet = list.copy(Puzzle.ALPHABET)
-        random.shuffle(original_alphabet)
-        self.hashed_key_forwards = {Puzzle.ALPHABET[i]: original_alphabet[i]
-                                    for i in range(len(Puzzle.ALPHABET))}
-        self.hashed_key_backwards = {original_alphabet[i]: Puzzle.ALPHABET[i]
-                                     for i in range(len(Puzzle.ALPHABET))}
+    def select_puzzle(self):
+        self.puzzle = random.choice(self.soup.get_episodes())
 
-    def get_puzzle(self):
-        self.puzzle = random.choice(self.puzzles)
+    def hash_puzzle(self):
+        alphabet = list.copy(Puzzle.ALPHABET)
+        alphabet = random.sample(alphabet, len(alphabet))
+        self.alpha_to_hash = {
+            Puzzle.ALPHABET[i]: alphabet[i] for i in range(len(Puzzle.ALPHABET))}
+        self.hash_to_alpha = {
+            alphabet[i]: Puzzle.ALPHABET[i]
+            for i in range(len(Puzzle.ALPHABET))}
 
-    def hash_the_puzzle(self):
         for letter in self.puzzle:
-            if letter.isspace():
+            if not letter.isalpha():
                 self.hashed_puzzle += letter
-            elif letter.upper() in Puzzle.ALPHABET: # not including special characters in the puzzle, only letters in the alphabet
-                self.hashed_puzzle += self.hashed_key_backwards[letter.upper()]
-
-        self.hashed_puzzle = "   ".join(self.hashed_puzzle.split())
-
-    def update_puzzle(self):
-        self.updated_puzzle = ""
-        for letter in self.hashed_puzzle:
-            if letter.isspace():
-                self.updated_puzzle += letter
-            else:
-                self.updated_puzzle += self.guesses[letter.upper()]
-
-    def get_answer_puzzle(self):
-        self.answer_puzzle = ""
-        for letter in self.puzzle:
-            if letter.isspace():
-                self.answer_puzzle += letter
             elif letter.upper() in Puzzle.ALPHABET:
-                self.answer_puzzle += letter.upper()
-        self.answer_puzzle = "   ".join(self.answer_puzzle.split())
-        return self.answer_puzzle
+                self.hashed_puzzle += self.alpha_to_hash[letter.upper()]
 
-    def display_puzzle(self):
-        print(self.updated_puzzle)
-        print(self.hashed_puzzle)
+        self.hashed_puzzle = "  ".join(self.hashed_puzzle.split())
 
-    def set_guesses_equal_to_key(self):
-        self.guesses = self.hashed_key_forwards
+    def update_guesses(self, alpha, guess):
+        self.alpha_to_guesses[alpha.upper()] = guess.upper()
 
-    def guess_a_letter(self, letter_to_replace, letter_to_replace_with):
-        # want letter_to_replace_with to not have been used already
-        if letter_to_replace_with in self.guesses.values():
-            print()
-            print('!!!'*12)
-            print(f'You already used that one, try again')
-            print('!!!'*12)
-            print()
-            return -1
+    def guess_already_used(self, alpha, guess):
+        if guess in self.alpha_to_guesses.values():
+            return True
         else:
-            self.guesses[letter_to_replace] = letter_to_replace_with
-            return 0
+            return False
+
+    def update_guessed_puzzle(self):
+        self.guessed_puzzle = ""
+        for letter in self.hashed_puzzle:
+            if not letter.isalpha():
+                self.guessed_puzzle += letter
+            elif letter.upper() in Puzzle.ALPHABET:
+                self.guessed_puzzle += self.alpha_to_guesses[letter.upper()]
+
+        self.guessed_puzzle = "  ".join(self.guessed_puzzle.split())
 
     def puzzle_matches_key(self):
         for letter in self.hashed_puzzle:
-            if not letter.isspace():
-                if self.guesses[letter] == self.hashed_key_forwards[letter]:
+            if letter.isalpha():
+                if self.alpha_to_guesses[letter] == self.hash_to_alpha[letter]:
                     continue
                 else:
                     return False
         return True
+
+    def display_guessed_puzzle(self):
+        print(self.guessed_puzzle)
+
+    def display_hashed_puzzle(self):
+        print(self.hashed_puzzle)
+
+    def display_puzzle(self):
+        print("  ".join(self.puzzle.split()))
