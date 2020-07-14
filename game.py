@@ -32,6 +32,9 @@ class Game:
                       __/ |
                      |___/
     """
+    DIVIDER = """\
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    """
 
     def __init__(self):
         self.puzzle = Puzzle()
@@ -47,7 +50,9 @@ class Game:
             self.won = False
             self.puzzle.reset_puzzle()
             self.puzzle.select_puzzle()
+            print()
             self.puzzle.display_puzzle()
+            print()
             self.puzzle.hash_puzzle()
             self.ask_user_to_set_difficulty()
         else:
@@ -55,7 +60,8 @@ class Game:
         return response
 
     def calculate_difficulty(self, difficulty):
-        num_unique_characters = len(set("".join(ch.lower() for ch in self.puzzle.puzzle if ch.isalpha())))
+        num_unique_characters = len(
+            set("".join(ch.lower() for ch in self.puzzle.puzzle if ch.isalpha())))
 
         if difficulty == 'EASY' or difficulty == 'E':
             turns = num_unique_characters * 5
@@ -95,24 +101,29 @@ class Game:
                 self.turns -= 1
             elif blanks:
                 print()
-                print(f'Try again')
+                print(game.DIVIDER)
+                print(f'        >>>> Try again. <<<<')
             elif already_used:
                 print()
-                print(f'Already used that letter in the puzzle, try again.')
+                print(game.DIVIDER)
+                print(f'>>>> Already used that letter in the puzzle, try again. <<<<')
 
             if self.turns > 0:
-                print(f'Turns left {self.turns}')
-                print()
+                print(game.DIVIDER)
+                print(f'Turns left: {self.turns}\n')
 
         while not self.won and self.turns > 0:
             self.puzzle.update_guessed_puzzle()
             self.puzzle.display_guessed_puzzle()
             self.puzzle.display_hashed_puzzle()
 
-            letter_to_replace = input("What letter would you like to replace? ").upper()
-            guess = input("What letter would you like to replace it with? ").upper()
+            letter_to_replace = input(
+                "What letter would you like to replace? ").upper()
+            guess = input(
+                "What letter would you like to replace it with? ").upper()
 
-            already_used = self.puzzle.guess_already_used(letter_to_replace, guess)
+            already_used = self.puzzle.guess_already_used(
+                letter_to_replace, guess)
             blanks = user_entered_blanks(letter_to_replace, guess)
             display_message(already_used, blanks)
             self.won = self.puzzle.puzzle_matches_key()
