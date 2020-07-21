@@ -1,15 +1,17 @@
 from unittest import mock
 import game
+from game import Game
 import unittest
 
 
 class TestGame(unittest.TestCase):
+    def setUp(self):
+        self.game = Game()
 
-    @mock.patch('game.ask_user_to_set_difficulty', create=True)
+    @mock.patch('builtins.input', return_value = 'H')
     def test_ask_user_to_set_difficulty(self, mocked_input):
-        mocked_input.side_effect = 'H'
-        self.assertEqual(next(mocked_input.side_effect), 'H')
-    
+        result = self.game.ask_user_to_set_difficulty()
+        self.assertEqual(result, 'H')
 
 
 if __name__ == '__main__':
