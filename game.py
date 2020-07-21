@@ -38,19 +38,28 @@ class Game:
 
     def __init__(self):
         self.puzzle = Puzzle()
+        self.reset_game()
+
+    def reset_game(self):
         self.turns = 0
         self.won = False
 
+    def ask_user_to_set_difficulty(self):
+        difficulty = input(
+            "What difficulty would you like to play? (easy (E)/medium (M)/hard (H)) ").upper()
+        return difficulty
+
     def set_game(self):
-        self.turns = 0
-        self.won = False
+        self.reset_game()
         self.puzzle.reset_puzzle()
         self.puzzle.select_puzzle()
         print()
         self.puzzle.display_puzzle()
         print()
         self.puzzle.hash_puzzle()
-        self.ask_user_to_set_difficulty()
+        difficulty = self.ask_user_to_set_difficulty()
+        self.turns = self.calculate_difficulty(difficulty)
+        print(f'Number of turns: {self.turns}')
 
     def ask_user_to_play(self):
         response = input("Do you want to play? (y/n) ").lower()
@@ -64,7 +73,6 @@ class Game:
     def calculate_difficulty(self, difficulty):
         num_unique_characters = len(
             set("".join(ch.lower() for ch in self.puzzle.puzzle if ch.isalpha())))
-
         if difficulty == 'EASY' or difficulty == 'E':
             turns = num_unique_characters * 5
         elif difficulty == 'MEDIUM' or difficulty == 'M':
@@ -73,64 +81,53 @@ class Game:
             turns = num_unique_characters * 1
         return turns
 
-    def ask_user_to_set_difficulty(self):
-        difficulty = input(
-            "What difficulty would you like to play? (easy (E)/medium (M)/hard (H)) ").upper()
-        self.turns = self.calculate_difficulty(difficulty)
-        print(f'Number of turns: {self.turns}')
+    def user_entered_blanks(self, letter_to_replace, guess):
+        if letter_to_replace != "" and guess != "":
+            blanks = False
+        else:
+            blanks = True
+        return blanks
+
+    def display_won_or_lost(self):
+        if self.turns >= 0 and self.won:
+            print(f'{game.WON}')
+        else:
+            print(f'{game.LOST}')
+            self.puzzle.display_puzzle()
+            self.puzzle.display_hashed_puzzle()
+            print()
+
+    def display_message(self, already_used, blanks, letter_to_replace, guess):
+        if not already_used and not blanks:
+            self.puzzle.update_guesses(letter_to_replace, guess)
+            self.turns -= 1
+        elif blanks:
+            print()
+            print(game.DIVIDER)
+            print(f'        >>>> Try again. <<<<')
+        elif already_used:
+            print()
+            print(game.DIVIDER)
+            print(f'>>>> Already used that letter in the puzzle, try again. <<<<')
+        if self.turns > 0:
+            print(game.DIVIDER)
+            print(f'Turns left: {self.turns}\n')
 
     def play_round(self):
-
-        def user_entered_blanks(letter_to_replace, guess):
-            if letter_to_replace != "" and guess != "":
-                blanks = False
-            else:
-                blanks = True
-            return blanks
-
-        def display_won_or_lost():
-            if self.turns >= 0 and self.won:
-                print(f'{game.WON}')
-            else:
-                print(f'{game.LOST}')
-                self.puzzle.display_puzzle()
-                self.puzzle.display_hashed_puzzle()
-                print()
-
-        def display_message(already_used, blanks):
-            if not already_used and not blanks:
-                self.puzzle.update_guesses(letter_to_replace, guess)
-                self.turns -= 1
-            elif blanks:
-                print()
-                print(game.DIVIDER)
-                print(f'        >>>> Try again. <<<<')
-            elif already_used:
-                print()
-                print(game.DIVIDER)
-                print(f'>>>> Already used that letter in the puzzle, try again. <<<<')
-
-            if self.turns > 0:
-                print(game.DIVIDER)
-                print(f'Turns left: {self.turns}\n')
-
         while not self.won and self.turns > 0:
             self.puzzle.update_guessed_puzzle()
             self.puzzle.display_guessed_puzzle()
             self.puzzle.display_hashed_puzzle()
-
             letter_to_replace = input(
                 "What letter would you like to replace? ").upper()
             guess = input(
                 "What letter would you like to replace it with? ").upper()
-
             already_used = self.puzzle.guess_already_used(
                 letter_to_replace, guess)
-            blanks = user_entered_blanks(letter_to_replace, guess)
-            display_message(already_used, blanks)
+            blanks = self.user_entered_blanks(letter_to_replace, guess)
+            self.display_message(already_used, blanks, letter_to_replace, guess)
             self.won = self.puzzle.puzzle_matches_key()
-
-        display_won_or_lost()
+        self.display_won_or_lost()
 
     def play_game(self):
         play_again = self.ask_user_to_play()

@@ -1,9 +1,6 @@
 from unittest import mock
 import random
-import io
 import unittest
-import re
-
 from puzzle import Puzzle
 
 
@@ -24,7 +21,6 @@ def alphabet(values, length):
 class TestPuzzle(unittest.TestCase):
     def setUp(self):
         self.puzzle = Puzzle()
-
         with mock.patch('random.choice', puzzle):
             self.puzzle.select_puzzle()
             with mock.patch('random.sample', alphabet):

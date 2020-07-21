@@ -4,8 +4,11 @@ init:
 activate:
 	pipenv shell
 
-test:
+test_puzzle:
 	python3 -m unittest -v test_puzzle
+
+test_game:
+	python3 -m unittest -v test_game
 
 coverage_test:
 	coverage run -m unittest discover
