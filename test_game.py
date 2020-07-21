@@ -13,6 +13,11 @@ class TestGame(unittest.TestCase):
         result = self.game.ask_user_to_set_difficulty()
         self.assertEqual(result, 'H')
 
+    @mock.patch('builtins.input', return_value = 'y')
+    def test_ask_user_to_play(self, mocked_input):
+        result = self.game.ask_user_to_play()
+        self.assertEqual(result, 'y')
+
 
 if __name__ == '__main__':
     unittest.main()

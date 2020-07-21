@@ -63,11 +63,6 @@ class Game:
 
     def ask_user_to_play(self):
         response = input("Do you want to play? (y/n) ").lower()
-        if response == "y":
-            print("Let's play!")
-            self.set_game()
-        else:
-            print(f'{game.SEEYOULATER}')
         return response
 
     def calculate_difficulty(self, difficulty):
@@ -129,11 +124,21 @@ class Game:
             self.won = self.puzzle.puzzle_matches_key()
         self.display_won_or_lost()
 
+    def go_again_or_end(self, play_again):
+        if play_again == 'y':
+            print("Let's play!")
+            self.set_game()
+        else:
+            print(f'{game.SEEYOULATER}')
+
     def play_game(self):
         play_again = self.ask_user_to_play()
+        self.go_again_or_end(play_again)
         while play_again == 'y':
             self.play_round()
             play_again = self.ask_user_to_play()
+            self.go_again_or_end(play_again)
+
 
 
 if __name__ == '__main__':
