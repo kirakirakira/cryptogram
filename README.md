@@ -10,7 +10,10 @@ Must have pipenv installed
 2. Run `make init` to install dependencies.
 3. Run `make activate` to activate the virtual environment.
 4. Run `make run` to start the game.
-5. Run `make test` to run tests on `Puzzle`.
+
+## How to run tests
+1. Run `make test_puzzle` to run tests on `Puzzle`.
+2. Run `make test_game` to run tests on `Game`.
 
 ## Game Overview
 This is a Cryptogram puzzle game, and you will be deciphering some text and that text is a title of an episode of Gilmore Girls. For more on [Cryptograms](https://en.wikipedia.org/wiki/Cryptogram). For a list of Gilmore Girl [episodes](https://en.wikipedia.org/wiki/List_of_Gilmore_Girls_episodes).
