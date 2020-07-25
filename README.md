@@ -4,9 +4,9 @@ Cryptogram puzzle game in Python
 This is a Cryptogram puzzle game that you can play in the console.
 
 ## How to run
-Must have pipenv installed
-1. Clone this repo
-2. Make sure you are in the top directory.
+0. Must have pipenv installed ([installation instructions](https://pypi.org/project/pipenv/))
+1. Clone this repo: `git clone https://github.com/kirakirakira/cryptogram.git`
+2. Make sure you are in the top project directory (cryptogram if you didn't rename it)
 2. Run `make init` to install dependencies.
 3. Run `make activate` to activate the virtual environment.
 4. Run `make run` to start the game.
