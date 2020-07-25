@@ -47,4 +47,5 @@ What letter would you like to replace?
 - Created a dictionary or list, populated it with several values, retrieved at least one value, and used it in the program (`self.alpha_to_hash`, `self.hash_to_alpha`, and `self.alpha_to_guesses`)
 - Read data from an external file, such as text, JSON, CSV, etc and use that data in your application (scraped a webpage using Beautiful Soup) (`Soup` scrapes Gilmore Girl episode titles from a Wikipedia page)
 - Created and called at least 3 functions, at least one of which returned a value that is used (there's a whole bunch)
+- Create 3 or more unit tests for your application (see `test_game.py` and `test_puzzle.py`)
 

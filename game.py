@@ -50,6 +50,7 @@ class Game:
         return difficulty
 
     def set_game(self):
+        """Reset and set the game's puzzle"""
         self.reset_game()
         self.puzzle.reset_puzzle()
         self.puzzle.select_puzzle()
@@ -84,6 +85,9 @@ class Game:
         return blanks
 
     def display_won_or_lost(self):
+        """Display won or lost message,
+        Display answer if they lost
+        """
         if self.turns >= 0 and self.won:
             print(f'{game.WON}')
         else:
@@ -93,6 +97,7 @@ class Game:
             print()
 
     def display_message(self, already_used, blanks, letter_in_hash, letter_to_replace, guess):
+        """Display message depending on what they want to replace and guess"""
         if not already_used and not blanks and letter_in_hash:
             self.puzzle.update_guesses(letter_to_replace, guess)
             self.turns -= 1
@@ -113,24 +118,33 @@ class Game:
             print(f'Turns left: {self.turns}\n')
 
     def play_round(self):
+        """Play a round of the game,
+        win or lose if run out of turns or don't guess the puzzle
+        """
         while not self.won and self.turns > 0:
             self.puzzle.update_guessed_puzzle()
             self.puzzle.display_guessed_puzzle()
             self.puzzle.display_hashed_puzzle()
+
             letter_to_replace = input(
                 "What letter would you like to replace? ").upper()
             guess = input(
                 "What letter would you like to replace it with? ").upper()
+
             already_used = self.puzzle.guess_already_used(
                 letter_to_replace, guess)
             blanks = self.user_entered_blanks(letter_to_replace, guess)
             letter_in_hash = self.puzzle.letter_in_hash(
                 letter_to_replace, guess)
+
             self.display_message(already_used, blanks, letter_in_hash, letter_to_replace, guess)
             self.won = self.puzzle.puzzle_matches_key()
         self.display_won_or_lost()
 
     def go_again_or_end(self, play_again):
+        """Check if user wants to play again,
+        Set the game again if they type 'y' or print see you later if they don't
+        """
         if play_again == 'y':
             print("Let's play!")
             self.set_game()
@@ -138,6 +152,10 @@ class Game:
             print(f'{game.SEEYOULATER}')
 
     def play_game(self):
+        """Start the game by asking user to play,
+        Continue playing until they type something other than 'y'
+        """
+
         play_again = self.ask_user_to_play()
         self.go_again_or_end(play_again)
         while play_again == 'y':

@@ -4,6 +4,9 @@ import requests
 
 class Soup:
    def __init__(self):
+      """Scrape Wikipedia for Gilmore Girls episode titles,
+      Store them in a list
+      """
       self.season_episodes = []
 
       page = requests.get(
