@@ -92,8 +92,8 @@ class Game:
             self.puzzle.display_hashed_puzzle()
             print()
 
-    def display_message(self, already_used, blanks, letter_to_replace, guess):
-        if not already_used and not blanks:
+    def display_message(self, already_used, blanks, letter_in_hash, letter_to_replace, guess):
+        if not already_used and not blanks and letter_in_hash:
             self.puzzle.update_guesses(letter_to_replace, guess)
             self.turns -= 1
         elif blanks:
@@ -104,6 +104,10 @@ class Game:
             print()
             print(game.DIVIDER)
             print(f'>>>> Already used that letter in the puzzle, try again. <<<<')
+        elif not letter_in_hash:
+            print()
+            print(game.DIVIDER)
+            print(f'>>>> That letter is not in the puzzle, try again. <<<<')
         if self.turns > 0:
             print(game.DIVIDER)
             print(f'Turns left: {self.turns}\n')
@@ -120,7 +124,9 @@ class Game:
             already_used = self.puzzle.guess_already_used(
                 letter_to_replace, guess)
             blanks = self.user_entered_blanks(letter_to_replace, guess)
-            self.display_message(already_used, blanks, letter_to_replace, guess)
+            letter_in_hash = self.puzzle.letter_in_hash(
+                letter_to_replace, guess)
+            self.display_message(already_used, blanks, letter_in_hash, letter_to_replace, guess)
             self.won = self.puzzle.puzzle_matches_key()
         self.display_won_or_lost()
 

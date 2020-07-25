@@ -55,6 +55,12 @@ class Puzzle:
         else:
             return False
 
+    def letter_in_hash(self, letter_to_replace, guess):
+        if letter_to_replace in self.hashed_puzzle:
+            return True
+        else:
+            return False 
+
     def update_guessed_puzzle(self):
         self.guessed_puzzle = ""
         for letter in self.hashed_puzzle:
