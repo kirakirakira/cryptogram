@@ -49,3 +49,7 @@ What letter would you like to replace?
 - Created and called at least 3 functions, at least one of which returned a value that is used (there's a whole bunch)
 - Create 3 or more unit tests for your application (see `test_game.py` and `test_puzzle.py`)
 
+## Other Requirements
+- Comments exist
+- > 70 commits
+
