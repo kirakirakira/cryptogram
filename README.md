@@ -51,5 +51,5 @@ What letter would you like to replace?
 
 ## Other Requirements
 - Comments exist
-- > 70 commits
+- Greater than 70 commits
 
