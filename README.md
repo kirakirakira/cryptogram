@@ -11,6 +11,9 @@ This is a Cryptogram puzzle game that you can play in the console.
 3. Run `make activate` to activate the virtual environment.
 4. Run `make run` to start the game.
 
+If you're unable to install pipenv, but you have Python 3.8, you can run the game without a virtual environment by running:
+`python3 game.py`
+
 ## How to run tests
 1. Run `make test_puzzle` to run tests on `Puzzle`.
 2. Run `make test_game` to run tests on `Game`.
