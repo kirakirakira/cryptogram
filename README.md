@@ -4,7 +4,7 @@ Cryptogram puzzle game in Python
 This is a Cryptogram puzzle game that you can play in the console.
 
 ## How to run
-0. Must have [Python 3.8](https://www.python.org/downloads/) and pipenv installed ([installation instructions](https://pypi.org/project/pipenv/))
+0. Must have [Python 3.8](https://www.python.org/downloads/) and pipenv installed ([installation instructions](https://pypi.org/project/pipenv/)) (Python version > 3.6 should also work too, needs to have PEP 498 - formatted string literals)
 1. Clone this repo: `git clone https://github.com/kirakirakira/cryptogram.git`
 2. Make sure you are in the top project directory (cryptogram if you didn't rename it)
 2. Run `make init` to install dependencies.
@@ -33,12 +33,12 @@ Number of turns: 10
 What letter would you like to replace? A
 What letter would you like to replace it with? T
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    
+
 Turns left: 9
 
 "T__  ____T  _T___"
 "AZS  LYSRA  OAVJQ"
-What letter would you like to replace? 
+What letter would you like to replace?
 ```
 
 ## Project Requirements Met
