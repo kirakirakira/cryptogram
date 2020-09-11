@@ -18,7 +18,7 @@ class Puzzle:
         self.soup = Soup()
 
     def reset_puzzle(self):
-        """Reset the puzzles and dictionaries"""
+        """Reset the puzzles and dictionaries ---- """
         self.puzzle = ""
         self.hashed_puzzle = ""
         self.guessed_puzzle = ""
