@@ -17,6 +17,9 @@ class Puzzle:
             Puzzle.ALPHABET[i]: '_' for i in range(len(Puzzle.ALPHABET))}
         self.soup = Soup()
 
+    def puzzle_me_awesome(self):
+        self.puzzle = "blah"
+
     def reset_puzzle(self):
         """Reset the puzzles and dictionaries"""
         self.puzzle = ""
@@ -65,7 +68,7 @@ class Puzzle:
         if letter_to_replace in self.hashed_puzzle:
             return True
         else:
-            return False 
+            return False
 
     def update_guessed_puzzle(self):
         """Update the guessed puzzle for display purposes"""
