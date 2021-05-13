@@ -21,5 +21,11 @@ jobs:
           echo "Changed files: ${{ steps.verify_changed_files.outputs.changed_files }}"
       - name: Perform action when files change.
         if: steps.verify-changed-files.outputs.files_changed == 'true'
-        run: |
-          echo "Do something when files have changed."
+        run:
+          steps:
+          - name: Post comment
+            uses: KeisukeYamashita/create-comment@v1
+            with:
+              comment: |
+                Issue title must start with 'ABC-'.
+                Auto-closing this issue.
